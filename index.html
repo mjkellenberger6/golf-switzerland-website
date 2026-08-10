@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Golf Switzerland</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --moss-900:#2C3A1B;
+    --moss-700:#4B6130;
+    --moss-600:#5A7339;
+    --moss-400:#8CA26A;
+    --sage-200:#C9D4B4;
+    --cream-100:#F6F1E3;
+    --cream-50:#FBF8F0;
+    --gold-500:#B8874B;
+    --gold-600:#9C6F3A;
+    --ink-900:#20281A;
+    --line:rgba(246,241,227,0.18);
+    --line-dark:rgba(32,40,26,0.12);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter', sans-serif;
+    background:var(--cream-50);
+    color:var(--ink-900);
+    line-height:1.5;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.serif{
+    font-family:'Fraunces', serif;
+    font-weight:400;
+    letter-spacing:-0.01em;
+  }
+  .label{
+    font-family:'Inter', sans-serif;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+  }
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  .container{
+    width:100%;
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+  @media(max-width:640px){ .container{padding:0 20px;} }
+
+  /* ===== NAV ===== */
+  nav{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px 32px;
+    mix-blend-mode:normal;
+    transition:background .4s ease, padding .4s ease, backdrop-filter .4s ease;
+  }
+  nav.scrolled{
+    background:rgba(246,241,227,0.92);
+    backdrop-filter:blur(10px);
+    padding:14px 32px;
+    box-shadow:0 1px 0 var(--line-dark);
+  }
+  .nav-mark{
+    display:flex; align-items:baseline; gap:8px;
+    font-family:'Fraunces', serif; font-size:20px; color:var(--cream-100);
+    transition:color .4s ease;
+  }
+  nav.scrolled .nav-mark{ color:var(--moss-700); }
+  .nav-mark small{
+    font-family:'Inter',sans-serif; font-size:10px; letter-spacing:0.24em; font-weight:600;
+    color:inherit; opacity:0.85; text-transform:uppercase;
+  }
+  .nav-links{ display:flex; gap:36px; align-items:center; }
+  .nav-links a{
+    font-size:13px; letter-spacing:0.06em; color:var(--cream-100); opacity:0.9;
+    transition:opacity .2s, color .4s ease;
+  }
+  nav.scrolled .nav-links a{ color:var(--ink-900); }
+  .nav-links a:hover{ opacity:1; }
+  .nav-cta{
+    border:1px solid var(--cream-100); padding:9px 18px; border-radius:2px;
+    font-size:12px; letter-spacing:0.08em;
+  }
+  nav.scrolled .nav-cta{ border-color:var(--moss-700); color:var(--moss-700); }
+  @media(max-width:800px){ .nav-links{display:none;} }
+
+  /* ===== HERO ===== */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    background:var(--moss-700);
+    color:var(--cream-100);
+    display:flex; flex-direction:column; justify-content:center;
+    padding-top:120px; padding-bottom:80px;
+    overflow:hidden;
+  }
+  .contours{
+    position:absolute; inset:0; z-index:0; opacity:0.5;
+  }
+  .contours svg{ width:100%; height:100%; }
+  .hero-inner{ position:relative; z-index:2; }
+  .hero-eyebrow{
+    display:flex; align-items:center; gap:14px; margin-bottom:28px;
+    color:var(--sage-200);
+    opacity:0; transform:translateY(10px);
+    animation:riseIn .9s .1s ease forwards;
+  }
+  .hero-eyebrow .dot{width:6px; height:6px; border-radius:50%; background:var(--gold-500);}
+  .hero h1{
+    font-size:clamp(48px, 9vw, 118px);
+    line-height:0.94;
+    font-weight:300;
+    color:var(--cream-100);
+  }
+  .hero h1 .line{
+    display:block; overflow:hidden;
+  }
+  .hero h1 .line span{
+    display:block;
+    opacity:0; transform:translateY(100%);
+    animation:riseIn 1s ease forwards;
+  }
+  .hero h1 .line:nth-child(1) span{ animation-delay:.15s; }
+  .hero h1 .line:nth-child(2) span{ animation-delay:.3s; color:var(--sage-200); font-style:italic; }
+  .hero-sub{
+    max-width:480px; margin-top:32px;
+    font-size:17px; color:var(--sage-200); line-height:1.65;
+    opacity:0; transform:translateY(10px);
+    animation:riseIn .9s .55s ease forwards;
+  }
+  .hero-actions{
+    display:flex; gap:16px; margin-top:44px; flex-wrap:wrap;
+    opacity:0; transform:translateY(10px);
+    animation:riseIn .9s .7s ease forwards;
+  }
+  .btn{
+    display:inline-flex; align-items:center; gap:10px;
+    padding:15px 26px; font-size:13px; letter-spacing:0.06em; font-weight:600;
+    border-radius:2px; transition:transform .25s ease, background .25s ease, color .25s ease;
+  }
+  .btn-primary{ background:var(--gold-500); color:var(--moss-900); }
+  .btn-primary:hover{ background:var(--cream-100); transform:translateY(-2px); }
+  .btn-ghost{ border:1px solid rgba(246,241,227,0.4); color:var(--cream-100); }
+  .btn-ghost:hover{ border-color:var(--cream-100); transform:translateY(-2px); }
+
+  .hero-scroll{
+    position:absolute; bottom:36px; left:32px; z-index:2;
+    display:flex; align-items:center; gap:10px; color:var(--sage-200);
+    font-size:11px; letter-spacing:0.2em; text-transform:uppercase;
+  }
+  .hero-scroll .stem{ width:1px; height:34px; background:linear-gradient(var(--sage-200), transparent); }
+
+  @keyframes riseIn{ to{ opacity:1; transform:translateY(0);} }
+
+  /* ===== MANIFESTO ===== */
+  .manifesto{
+    padding:150px 0 120px;
+    background:var(--cream-50);
+  }
+  .manifesto-grid{
+    display:grid; grid-template-columns:220px 1fr; gap:60px;
+  }
+  @media(max-width:760px){ .manifesto-grid{ grid-template-columns:1fr; gap:24px; } }
+  .manifesto .label{ color:var(--gold-600); }
+  .manifesto p.big{
+    font-family:'Fraunces', serif; font-weight:400;
+    font-size:clamp(26px, 3.4vw, 40px);
+    line-height:1.35; color:var(--ink-900);
+    max-width:720px;
+  }
+  .manifesto p.big em{ color:var(--moss-700); font-style:italic; }
+  .manifesto-note{
+    margin-top:36px; color:#5C6650; font-size:15px; max-width:640px; line-height:1.7;
+  }
+
+  /* ===== STATS / REGIONS (contour label list) ===== */
+  .regions{
+    background:var(--moss-900); color:var(--cream-100);
+    padding:100px 0;
+  }
+  .regions-head{ display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:60px; flex-wrap:wrap; gap:20px;}
+  .regions-head h2{ font-size:clamp(28px,4vw,44px); font-weight:300; }
+  .regions-head p{ color:var(--sage-200); max-width:320px; font-size:14px; line-height:1.6; }
+  .region-list{ border-top:1px solid var(--line); }
+  .region-row{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:26px 0; border-bottom:1px solid var(--line);
+    transition:padding-left .3s ease;
+  }
+  .region-row:hover{ padding-left:14px; }
+  .region-row .rname{
+    font-family:'Fraunces', serif; font-size:clamp(22px,3vw,32px); font-weight:400;
+    display:flex; align-items:baseline; gap:18px;
+  }
+  .region-row .rname .idx{
+    font-family:'Inter',sans-serif; font-size:12px; color:var(--gold-500); letter-spacing:0.1em;
+  }
+  .region-row .rstatus{
+    font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:var(--sage-200);
+  }
+  .region-row .rstatus.active{ color:var(--gold-500); }
+
+  /* ===== CONTENT SHOWCASE ===== */
+  .showcase{ padding:120px 0; background:var(--cream-50); }
+  .showcase-head{ display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:56px; flex-wrap:wrap; gap:20px; }
+  .showcase-head h2{ font-size:clamp(28px,4vw,44px); font-weight:300; color:var(--ink-900); }
+  .showcase-head a{
+    font-size:13px; letter-spacing:0.06em; color:var(--moss-700); border-bottom:1px solid var(--moss-700); padding-bottom:2px;
+  }
+  .showcase-grid{
+    display:grid; grid-template-columns:repeat(4, 1fr); gap:18px;
+  }
+  @media(max-width:900px){ .showcase-grid{ grid-template-columns:repeat(2,1fr);} }
+  @media(max-width:520px){ .showcase-grid{ grid-template-columns:1fr;} }
+  .card{
+    position:relative; aspect-ratio:4/5; border-radius:3px; overflow:hidden;
+    background:linear-gradient(160deg, var(--moss-600), var(--moss-900));
+    display:flex; align-items:flex-end; padding:18px;
+    isolation:isolate;
+  }
+  .card::before{
+    content:''; position:absolute; inset:0; opacity:0.35; z-index:0;
+    background-image:
+      repeating-linear-gradient(115deg, transparent 0 18px, rgba(255,255,255,0.06) 18px 19px);
+  }
+  .card-tag{
+    position:relative; z-index:1;
+    color:var(--cream-100); font-size:13px; line-height:1.4;
+  }
+  .card-tag .plat{
+    display:block; font-size:10px; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold-500); margin-bottom:6px;
+  }
+  .card:nth-child(2){ background:linear-gradient(160deg, #6B7F49, var(--moss-900)); }
+  .card:nth-child(3){ background:linear-gradient(160deg, var(--moss-900), #1D2712); }
+  .card:nth-child(4){ background:linear-gradient(160deg, var(--gold-600), var(--moss-900)); }
+
+  /* ===== WAITLIST ===== */
+  .waitlist{
+    background:var(--moss-700); color:var(--cream-100);
+    padding:130px 0; position:relative; overflow:hidden;
+  }
+  .waitlist .contours{ opacity:0.25; }
+  .waitlist-inner{ position:relative; z-index:1; max-width:640px; }
+  .waitlist h2{ font-size:clamp(30px,4.5vw,52px); font-weight:300; margin-bottom:20px; }
+  .waitlist p{ color:var(--sage-200); font-size:16px; max-width:480px; line-height:1.65; margin-bottom:40px; }
+  .waitlist-form{
+    display:flex; gap:0; border-bottom:1px solid rgba(246,241,227,0.4); max-width:480px; padding-bottom:14px;
+  }
+  .waitlist-form input{
+    flex:1; background:none; border:none; outline:none;
+    font-family:'Inter',sans-serif; font-size:16px; color:var(--cream-100);
+  }
+  .waitlist-form input::placeholder{ color:rgba(246,241,227,0.5); }
+  .waitlist-form button{
+    background:none; border:none; color:var(--gold-500); font-size:13px; letter-spacing:0.08em; font-weight:600; cursor:pointer;
+    white-space:nowrap; padding-left:16px;
+  }
+  .waitlist-form button:hover{ color:var(--cream-100); }
+  .waitlist-note{ margin-top:16px; font-size:12px; color:var(--sage-200); opacity:0.8; }
+  .waitlist-success{ display:none; font-size:14px; color:var(--gold-500); margin-top:16px; }
+
+  /* ===== FOOTER ===== */
+  footer{ background:var(--moss-900); color:var(--sage-200); padding:60px 0 30px; }
+  .footer-top{
+    display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:40px;
+    padding-bottom:40px; border-bottom:1px solid var(--line);
+  }
+  .footer-mark{ font-family:'Fraunces',serif; font-size:24px; color:var(--cream-100); }
+  .footer-mark small{ display:block; font-family:'Inter',sans-serif; font-size:10px; letter-spacing:0.24em; margin-top:6px; color:var(--sage-200); }
+  .footer-links{ display:flex; gap:48px; flex-wrap:wrap; }
+  .footer-col .label{ color:var(--gold-500); margin-bottom:14px; display:block; }
+  .footer-col a{ display:block; font-size:14px; margin-bottom:10px; color:var(--sage-200); }
+  .footer-col a:hover{ color:var(--cream-100); }
+  .footer-bottom{ display:flex; justify-content:space-between; padding-top:26px; font-size:12px; color:#6B7A5A; flex-wrap:wrap; gap:10px; }
+
+  .reveal{ opacity:0; transform:translateY(24px); transition:opacity .8s ease, transform .8s ease; }
+  .reveal.visible{ opacity:1; transform:translateY(0); }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="nav-mark">GOLF<small>&nbsp;Switzerland</small></div>
+  <div class="nav-links">
+    <a href="#manifesto">About</a>
+    <a href="#regions">Regions</a>
+    <a href="#showcase">Content</a>
+    <a href="#waitlist" class="nav-cta">Join waitlist</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="contours" id="contours"></div>
+  <div class="container hero-inner">
+    <div class="hero-eyebrow">
+      <span class="dot"></span>
+      <span class="label">Golf social discovery &mdash; Switzerland</span>
+    </div>
+    <h1>
+      <span class="line"><span>Find your next</span></span>
+      <span class="line"><span>round, not alone.</span></span>
+    </h1>
+    <p class="hero-sub">A community for golfers across Switzerland &mdash; built to solve the one thing every club membership doesn't: finding someone to actually play with.</p>
+    <div class="hero-actions">
+      <a href="#waitlist" class="btn btn-primary">Join the waitlist &nbsp;&rarr;</a>
+      <a href="#showcase" class="btn btn-ghost">See the content</a>
+    </div>
+  </div>
+  <div class="hero-scroll"><div class="stem"></div><span>Scroll</span></div>
+</section>
+
+<section class="manifesto" id="manifesto">
+  <div class="container manifesto-grid">
+    <div class="label reveal">The problem</div>
+    <div class="reveal">
+      <p class="big">Switzerland has some of the best golf in Europe &mdash; and almost no way to find a fourth. Clubs are private, apps are foreign, and most rounds still get booked in a WhatsApp group you had to already know about.</p>
+      <p class="manifesto-note">Golf Switzerland started as a content project &mdash; course reviews, swing content, the odd rant about slow play &mdash; and grew into something bigger: a place to actually <em style="font-style:italic; font-family:'Fraunces',serif; color:var(--moss-700);">meet</em> the golfers behind the feed. The app is next. This is where it starts.</p>
+    </div>
+  </div>
+</section>
+
+<section class="regions" id="regions">
+  <div class="container">
+    <div class="regions-head reveal">
+      <h2>Building region by region.</h2>
+      <p>We're rolling out community by canton &mdash; starting where the courses (and the DMs) already are.</p>
+    </div>
+    <div class="region-list">
+      <div class="region-row reveal"><div class="rname"><span class="idx">01</span> Zürich</div><div class="rstatus active">Live now</div></div>
+      <div class="region-row reveal"><div class="rname"><span class="idx">02</span> Genève &amp; Vaud</div><div class="rstatus">Opening soon</div></div>
+      <div class="region-row reveal"><div class="rname"><span class="idx">03</span> Ticino</div><div class="rstatus">Opening soon</div></div>
+      <div class="region-row reveal"><div class="rname"><span class="idx">04</span> Graubünden</div><div class="rstatus">On the list</div></div>
+      <div class="region-row reveal"><div class="rname"><span class="idx">05</span> Basel &amp; Bern</div><div class="rstatus">On the list</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="showcase" id="showcase">
+  <div class="container">
+    <div class="showcase-head reveal">
+      <h2>From the feed.</h2>
+      <a href="https://www.instagram.com/golfswitzerland" target="_blank" rel="noopener">Follow @golfswitzerland &rarr;</a>
+    </div>
+    <div class="showcase-grid">
+      <div class="card reveal"><div class="card-tag"><span class="plat">Reel</span>Course walkthrough: Golfclub Zürichsee</div></div>
+      <div class="card reveal"><div class="card-tag"><span class="plat">TikTok</span>Things nobody tells you before your first round</div></div>
+      <div class="card reveal"><div class="card-tag"><span class="plat">Reel</span>Ranking Swiss clubhouses by rösti quality</div></div>
+      <div class="card reveal"><div class="card-tag"><span class="plat">Post</span>Meet the community: 6 golfers, 1 tee time</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="waitlist" id="waitlist">
+  <div class="contours"></div>
+  <div class="container waitlist-inner">
+    <div class="label reveal" style="color:var(--gold-500); margin-bottom:18px;">The app</div>
+    <h2 class="reveal">Be first on the tee time.</h2>
+    <p class="reveal">We're building the easiest way to find golfers near you in Switzerland. Leave your email and you'll be first to get in when it opens in your region.</p>
+    <form class="waitlist-form reveal" id="waitlistForm">
+      <input type="email" id="waitlistEmail" placeholder="your@email.com" required>
+      <button type="submit">Join waitlist &nbsp;&rarr;</button>
+    </form>
+    <div class="waitlist-success" id="waitlistSuccess">You're on the list &mdash; see you on the course.</div>
+    <div class="waitlist-note reveal">No spam. Just a note when your region opens.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <div class="footer-mark">GOLF<small>SWITZERLAND</small></div>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <span class="label">Follow</span>
+          <a href="https://www.instagram.com/golfswitzerland" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.tiktok.com/@golfswitzerland" target="_blank" rel="noopener">TikTok</a>
+        </div>
+        <div class="footer-col">
+          <span class="label">Site</span>
+          <a href="#manifesto">About</a>
+          <a href="#regions">Regions</a>
+          <a href="#showcase">Content</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Golf Switzerland</span>
+      <span>Zürich, Switzerland</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Nav scroll state
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // Reveal on scroll
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+
+  // Contour line SVG generator (topographic motif)
+  function buildContours(container, seedOffset){
+    const svgNS = "http://www.w3.org/2000/svg";
+    const svg = document.createElementNS(svgNS, "svg");
+    svg.setAttribute("viewBox", "0 0 1200 800");
+    svg.setAttribute("preserveAspectRatio", "none");
+    const layers = 9;
+    for(let i=0;i<layers;i++){
+      const path = document.createElementNS(svgNS, "path");
+      const yBase = 60 + i * 78 + seedOffset;
+      let d = `M -50 ${yBase} `;
+      for(let x=-50; x<=1250; x+=100){
+        const wob = Math.sin((x/220) + i * 0.9 + seedOffset*0.01) * (24 + i*2.4);
+        d += `L ${x} ${yBase + wob} `;
+      }
+      path.setAttribute("d", d);
+      path.setAttribute("fill", "none");
+      path.setAttribute("stroke", "#F6F1E3");
+      path.setAttribute("stroke-width", i === 4 ? "1.4" : "0.7");
+      path.setAttribute("opacity", (0.5 - i*0.035).toFixed(2));
+      svg.appendChild(path);
+    }
+    container.appendChild(svg);
+  }
+  document.querySelectorAll('.contours').forEach((el, idx) => buildContours(el, idx * 40));
+
+  // Waitlist form (demo — stores nothing external, just confirms)
+  const form = document.getElementById('waitlistForm');
+  const success = document.getElementById('waitlistSuccess');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    form.style.display = 'none';
+    success.style.display = 'block';
+  });
+</script>
+
+</body>
+</html>
