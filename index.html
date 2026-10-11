@@ -81,15 +81,17 @@
     box-shadow:0 1px 0 var(--line-dark);
   }
   .nav-mark{
-    display:flex; align-items:baseline; gap:8px;
-    font-family:'Fraunces', serif; font-size:20px; color:var(--cream-100);
+    display:block; line-height:0;
+    color:var(--cream-100);
     transition:color .4s ease;
   }
-  nav.scrolled .nav-mark{ color:var(--moss-700); }
-  .nav-mark small{
-    font-family:'Inter',sans-serif; font-size:10px; letter-spacing:0.24em; font-weight:600;
-    color:inherit; opacity:0.85; text-transform:uppercase;
+  .nav-logo{
+    display:block; height:28px; width:auto;
+    transition:height .4s ease;
   }
+  nav.scrolled .nav-mark{ color:var(--moss-700); }
+  nav.scrolled .nav-logo{ height:24px; }
+  
   .nav-links{ display:flex; gap:36px; align-items:center; }
   .nav-links a{
     font-size:13px; letter-spacing:0.06em; color:var(--cream-100); opacity:0.9;
