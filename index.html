@@ -162,8 +162,8 @@
   }
   .btn-community{ background:#C9D4B4; color:#1F4D2B; }
   .btn-community:hover{ background:#1F4D2B; color:#C9D4B4; transform:translateY(-2px); }
-  .btn-ladies{ background: #F9D9E6; color: #A3295F;}
-  .btn-ladies:hover{ background: #A3295F; color: #F9D9E6; transform:translateY(-2px); }
+  .btn-ladies{ background: #c2e4f8; color: #1c2b4a;}
+  .btn-ladies:hover{ background: #1c2b4a; color: #c2e4f8; transform:translateY(-2px); }
   .btn-inspiration{ border:1px solid rgba(246,241,227,0.4); color:var(--cream-100); }
   .btn-inspiration:hover{ border-color:var(--cream-100); transform:translateY(-2px); }
 
@@ -271,11 +271,11 @@
   }
   a.event-card:hover .event-more{ color:var(--cream-100); }
 
-  /* ===== CONTENT SHOWCASE ===== */
-  .showcase{ padding:120px 0; background:var(--cream-50); }
-  .showcase-head{ display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:56px; flex-wrap:wrap; gap:20px; }
-  .showcase-head h2{ font-size:clamp(28px,4vw,44px); font-weight:300; color:var(--ink-900); }
-  .showcase-head a{
+  /* ===== CONTENT COMMUNITY ===== */
+  .community{ padding:120px 0; background:var(--cream-50); }
+  .community-head{ display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:56px; flex-wrap:wrap; gap:20px; }
+  .community-head h2{ font-size:clamp(28px,4vw,44px); font-weight:300; color:var(--ink-900); }
+  .community-head a{
     font-size:13px; letter-spacing:0.06em; color:var(--moss-700); border-bottom:1px solid var(--moss-700); padding-bottom:2px;
   }
   .showcase-grid{
@@ -306,11 +306,11 @@
   .card:nth-child(4){ background:linear-gradient(160deg, var(--gold-600), var(--moss-900)); }
 
   /* ===== WAITLIST ===== */
-  .waitlist{
+  .community{
     background:var(--moss-700); color:var(--cream-100);
     padding:130px 0; position:relative; overflow:hidden;
   }
-  .waitlist .contours{ opacity:0.25; }
+  .community .contours{ opacity:0.25; }
   .waitlist-inner{ position:relative; z-index:1; max-width:640px; }
   .waitlist h2{ font-size:clamp(30px,4.5vw,52px); font-weight:300; margin-bottom:20px; }
   .waitlist p{ color:var(--sage-200); font-size:16px; max-width:480px; line-height:1.65; margin-bottom:40px; }
@@ -362,10 +362,10 @@
           251.13 79.11L251.13 79.77L245.13 79.77L245.13 79.11C247.29 78.72 247.1 77.9 246.37 75.88L245.76 74.21L239.04 74.21L238.62 75.37C237.7 77.97 237.53 78.75 239.86 79.11L239.86 79.77L234.33 79.77L234.33 79.11C236.27 78.75 236.46 78.07 237.41 75.35L241.93 62.68L243.43 62.68L248.24 75.88ZM270.21 79.89L261.18 64.93L261.16 64.93L261.16 76.13C261.16 77.99 261.16 78.75 263.2 79.11L263.2 79.77L257.95 79.77L257.95 79.11C259.99 78.75 259.99 77.99 259.99 76.13L259.99 66.17C259.99 64.55 259.99 63.79 257.69 63.43L257.69 62.77L261.81 62.77L268.93 74.64L270.17 76.9L270.19 76.9L270.19 66.41C270.19 64.55 270.19 63.79 268.15 63.43L268.15 62.77L273.39
            62.77L273.39 63.43C271.36 63.79 271.36 64.55 271.36 66.41L271.36 79.77L270.21 79.89ZM287.22 78.67C291.54 78.67 293.31 75.47 293.31 71.27C293.31 67.07 291.54 63.87 287.31 63.87L284.13 63.87L284.13 76.93C284.13 78.21 284.33 78.67 285.74 78.67L287.22 78.67ZM280.44 79.77L280.44 79.11C282.44 78.75 282.44 77.99 282.44 76.15L282.44 66.39C282.44 64.55 282.44 63.79 280.44 63.43L280.44 62.77L287.17 62.77C292.24 62.77 295.18 66.03 295.18 71.27C295.18 76.51 292.15 79.77 287.07 79.77L280.44 79.77Z"/></svg></a>
   <div class="nav-links">
-    <a href="#about">About</a>
+    <a href="#manifesto">About</a>
     <a href="#events">Events</a>
     <a href="#inspiration">Find Inspiration</a>
-    <a href="#community" class="nav-cta">Join Community</a>
+    <a href="https://chat.whatsapp.com/K8zg4pRQtDJFkZUwoKjK7Y?mode=gi_t" target="_blank" rel="noopener" class="nav-cta">Join Community</a>
   </div>
 </nav>
 
@@ -382,8 +382,8 @@
     </h1>
     <p class="hero-sub">A community for golfers across Switzerland &mdash; built to solve the problem of finding playing partners you can enjoy your round with.</p>
     <div class="hero-actions">
-      <a href="#community" class="btn btn-community">Join the Community &nbsp;&rarr;</a>
-         <a href="#ladies" class="btn btn-ladies">Ladies Club &nbsp;&rarr;</a>
+      <a href="https://chat.whatsapp.com/K8zg4pRQtDJFkZUwoKjK7Y?mode=gi_t" target="_blank" rel="noopener" class="btn btn-community">Join the Community &nbsp;&rarr;</a>
+      <a href="#events" target="_blank" rel="noopener" class="btn btn-ladies">Ladies Club &nbsp;&rarr;</a>
       <a href="#inspiration" class="btn btn-inspiration">Find Inspiration &nbsp;&rarr;</a>
     </div>
   </div>
@@ -410,15 +410,27 @@
     <div class="events-group">
   <span class="label events-sub reveal">Upcoming</span>
   <div class="event-list">
-    <!-- Replace the href below with your real link (Instagram reel, Golfflix page, sign-up form...) -->
     <a class="event-feature reveal" href="https://www.instagram.com/golfswitzerland" target="_blank" rel="noopener">
       <div class="event-feature-body">
-        <img class="event-banner-img" src="gs-x-golfflix-transparent.png" alt="Golf Switzerland x Golfflix">
+        <img class="event-banner-img" src="PLACEHOLDER" alt="Golf Switzerland x Golfflix">
         <div class="event-row">
           <div class="event-date">Winter 2026-27<small>Dates to be announced</small></div>
           <div>
-            <div class="event-title">GS Indoor Golf &mdash; powered by Golfflix</div>
+            <div class="event-title">GS Indoor Golf &mdash; with Golfflix</div>
             <div class="event-meta">Golf doesn't have to take a break just because the weather says so. Details coming soon!</div>
+          </div>
+          <span class="event-link">Find out more &rarr;</span>
+        </div>
+      </div>
+    </a>
+    <a class="event-feature reveal" href="https://www.instagram.com/golfswitzerland" target="_blank" rel="noopener">
+      <div class="event-feature-body">
+        <img class="event-banner-img" src="PLACEHOLDER" alt="Golf Switzerland x VBEAUTY">
+        <div class="event-row">
+          <div class="event-date">Winter 2026-27<small>Dates to be announced</small></div>
+          <div>
+            <div class="event-title">GS Ladies Event &mdash; powered by VBEAUTY</div>
+            <div class="event-meta">Tee off. Glow up.</div>
           </div>
           <span class="event-link">Find out more &rarr;</span>
         </div>
@@ -433,7 +445,7 @@
         <!-- PAST EVENT: to add a photo, put the image in an "events" folder and change the next line to
              <div class="event-photo" style="--photo:url('events/your-photo.jpg')"></div> -->
         <a class="event-card reveal" href="https://www.instagram.com/p/DeXCcicDMqZ/" target="_blank" rel="noopener">
-          <div class="event-photo" role="img" aria-label="Photo from the first Ladies Club meetup" style="--photo:url('events/ladies-club-3-oct.jpg')"></div>
+          <div class="event-photo" role="img" aria-label="Photo from the first Ladies Club meetup" style="--photo:url('events/ladies-club-3-oct.jpeg')"></div>
           <span class="label event-when"><time datetime="2026-10-03">3 October 2026</time> &middot; Migros Golfpark Otelfingen</span>
           <h3>Ladies Club Event: Brunch and Tee Time</h3>
           <p>An amazing meetup with the GS Ladies. 9 Holes on the Altberg course at Migros Golfpark Otelfingen followed by a relaxed brunch together.</p>
