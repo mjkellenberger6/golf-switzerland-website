@@ -178,7 +178,7 @@
 
   /* ===== MANIFESTO ===== */
   .manifesto{
-    padding:150px 0 120px;
+    padding:70px 0 70px;
     background:var(--cream-50);
   }
   .manifesto-grid{
@@ -196,14 +196,54 @@
   .manifesto-note{
     margin-top:36px; color:#5C6650; font-size:15px; max-width:640px; line-height:1.7;
   }
+  .manifesto-title{
+  font-size:clamp(40px,6vw,72px);
+  font-weight:300;
+  line-height:1.05;
+  color:var(--ink-900);
+  margin-bottom:64px;
+}
+.manifesto-photo{
+  width:100%;
+  aspect-ratio:4/5;
+  object-fit:cover;
+  border-radius:3px;
+  margin-top:24px;
+}
+@media(max-width:760px){
+  .manifesto-photo{ max-width:320px; }
+}
+.manifesto-photo-wide{ width:100%; max-width:720px; 
+  aspect-ratio:16/9; object-fit:cover; 
+  border-radius:3px; margin-top:40px; 
+}
+
+.manifesto-banner{
+  width:100%; aspect-ratio:21/9; object-fit:cover;
+  border-radius:3px; margin-top:80px;
+}
+@media(max-width:760px){ .manifesto-banner{ aspect-ratio:4/3; } }
+
+.manifesto-bleed{
+  display:block; width:100%;
+  height:clamp(240px,42vw,520px); object-fit:cover;
+}
 
 /* ===== EVENTS ===== */
   .events{ background:var(--moss-900); color:var(--cream-100); padding:100px 0; }
-  .events-head{ display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:64px; flex-wrap:wrap; gap:20px; }
+  .events-head .events-title{
+  font-size:clamp(40px,6vw,72px);
+  font-weight:300;
+  line-height:1.05;
+  color:var(--cream-100);
+  margin-bottom:10px;
+}
+  .events-head{ display:flex; justify-content:space-between; align-items:center; margin-bottom:64px; flex-wrap:wrap; gap:20px; }
   .events-head h2{ font-size:clamp(28px,4vw,44px); font-weight:300; }
   .events-head p{ color:var(--sage-200); max-width:340px; font-size:14px; line-height:1.6; }
   .events-sub{ display:block; color:var(--gold-500); margin-bottom:22px; }
   .events-group + .events-group{ margin-top:80px; }
+  
  
   /* upcoming events: one row each */
   .event-list{ border-top:1px solid var(--line); }
@@ -259,7 +299,10 @@
   /* a real photo, set per card with style="--photo:url('events/name.jpg')", covers the placeholder */
   .event-photo::after{
     content:''; position:absolute; inset:0;
-    background-image:var(--photo, none); background-size:cover; background-position:center;
+    background-image:var(--photo, none);
+    background-repeat:no-repeat;
+    background-size:var(--fit, cover);
+    background-position:var(--pos, center);
   }
   .event-when{ display:block; margin-top:20px; color:var(--gold-500); }
   .event-card h3{ margin-top:8px; font-size:clamp(22px,2.6vw,28px); font-weight:400; }
@@ -272,17 +315,43 @@
   a.event-card:hover .event-more{ color:var(--cream-100); }
 
   /* ===== CONTENT COMMUNITY ===== */
-  .community{ padding:120px 0; background:var(--cream-50); }
-  .community-head{ display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:56px; flex-wrap:wrap; gap:20px; }
-  .community-head h2{ font-size:clamp(28px,4vw,44px); font-weight:300; color:var(--ink-900); }
-  .community-head a{
+  .inspiration{ padding:70px 0; background:var(--cream-50); }
+  .inspiration-head{ display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:56px; flex-wrap:wrap; gap:20px; }
+  .inspiration-head h2{ font-size:clamp(28px,4vw,44px); font-weight:300; color:var(--ink-900); }
+  .inspiration-head a{
     font-size:13px; letter-spacing:0.06em; color:var(--moss-700); border-bottom:1px solid var(--moss-700); padding-bottom:2px;
   }
+
   .showcase-grid{
-    display:grid; grid-template-columns:repeat(4, 1fr); gap:18px;
+  display:flex; gap:18px;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;
+  padding-bottom:16px;
+  scrollbar-width:thin;
+  scrollbar-color:var(--moss-600) transparent;
   }
-  @media(max-width:900px){ .showcase-grid{ grid-template-columns:repeat(2,1fr);} }
-  @media(max-width:520px){ .showcase-grid{ grid-template-columns:1fr;} }
+  .showcase-wrap{ position:relative; }
+  .showcase-arrow{
+  position:absolute; top:calc(50% - 8px); transform:translateY(-50%); z-index:5;
+  width:48px; height:48px; border-radius:50%; border:none; cursor:pointer;
+  background:var(--cream-50); color:var(--moss-700); font-size:20px;
+  box-shadow:0 4px 18px rgba(32,40,26,0.25);
+  transition:background .2s, color .2s;
+  }
+.showcase-arrow:hover{ background:var(--moss-700); color:var(--cream-50); }
+.showcase-arrow[hidden]{ display:none; }
+.showcase-arrow.prev{ left:-16px; }
+.showcase-arrow.next{ right:-16px; }
+@media(max-width:520px){ .showcase-arrow{ display:none; } }
+
+  .showcase-grid .card{
+  flex:0 0 calc((100% - 54px) / 4);   /* 4 cards visible */
+  scroll-snap-align:start;
+  }
+  @media(max-width:900px){ .showcase-grid .card{ flex-basis:calc((100% - 18px) / 2); } }  /* 2 visible */
+  @media(max-width:520px){ .showcase-grid .card{ flex-basis:80%; } }                      /* 1, with the next card peeking in */
+  
   .card{
     position:relative; aspect-ratio:4/5; border-radius:3px; overflow:hidden;
     background:linear-gradient(160deg, var(--moss-600), var(--moss-900));
@@ -294,6 +363,16 @@
     background-image:
       repeating-linear-gradient(115deg, transparent 0 18px, rgba(255,255,255,0.06) 18px 19px);
   }
+
+.card::after{
+  content:''; position:absolute; inset:0; z-index:0;
+  background-image:
+    linear-gradient(to top, rgba(32,40,26,0.75), transparent 55%),
+    var(--photo, none);
+  background-size:cover;
+  background-position:var(--pos, center);
+}
+
   .card-tag{
     position:relative; z-index:1;
     color:var(--cream-100); font-size:13px; line-height:1.4;
@@ -383,7 +462,7 @@
     <p class="hero-sub">A community for golfers across Switzerland &mdash; built to solve the problem of finding playing partners you can enjoy your round with.</p>
     <div class="hero-actions">
       <a href="https://chat.whatsapp.com/K8zg4pRQtDJFkZUwoKjK7Y?mode=gi_t" target="_blank" rel="noopener" class="btn btn-community">Join the Community &nbsp;&rarr;</a>
-      <a href="#events" target="_blank" rel="noopener" class="btn btn-ladies">Ladies Club &nbsp;&rarr;</a>
+      <a href="https://chat.whatsapp.com/F9fw9OwCwMA4Nmi0YjMwNP?s=cl&p=i&mlu=4&ilr=4" target="_blank" rel="noopener" class="btn btn-ladies">Ladies Club &nbsp;&rarr;</a>
       <a href="#inspiration" class="btn btn-inspiration">Find Inspiration &nbsp;&rarr;</a>
     </div>
   </div>
@@ -391,8 +470,13 @@
 </section>
 
 <section class="manifesto" id="manifesto">
+  <div class="container">
+    <h2 class="manifesto-title reveal">About Golf Switzerland</h2>
+  </div>
   <div class="container manifesto-grid">
-    <div class="label reveal">The problem</div>
+    <div class="reveal">
+      <div class="label">The problem</div>
+    </div>
     <div class="reveal">
       <p class="big">Switzerland has some of the most beautiful golf in Europe &mdash; but finding someone to play with is harder than it should be. Whether you&apos;re brand new or chasing a lower handicap, it's the right people who really make the round.</p>
       <p class="manifesto-note">Golf Switzerland started as a content project &mdash; course reviews, golf swings, and beginner struggles. Then it grew into an actual community: a place to find fun people you can enjoy golfing with.</p>
@@ -400,12 +484,17 @@
   </div>
 </section>
 
+<img class="manifesto-bleed" src="events/arosagolf_landscape.jpeg" alt="Golf course in the arosa mountains">
+
 <section class="events" id="events">
   <div class="container">
-    <div class="events-head reveal">
-      <h2>Come play with us.</h2>
-      <p>Rounds, meetups and a relaxed meal afterwards. Here's what's coming up, and what we've done so far.</p>
+  <div class="events-head reveal">
+    <div>
+      <h2 class="events-title">GS Events</h2>
+      <h2 class="events-tagline">Come play with us.</h2>
     </div>
+    <p>Rounds, meetups and a relaxed meal afterwards. Here's what's coming up, and what we've done so far.</p>
+  </div>
  
     <div class="events-group">
   <span class="label events-sub reveal">Upcoming</span>
@@ -448,14 +537,14 @@
         <!-- PAST EVENT: to add a photo, put the image in an "events" folder and change the next line to
              <div class="event-photo" style="--photo:url('events/your-photo.jpg')"></div> -->
         <a class="event-card reveal" href="https://www.instagram.com/p/DeXCcicDMqZ/" target="_blank" rel="noopener">
-          <div class="event-photo" role="img" aria-label="Photo from the first Ladies Club meetup" style="--photo:url('events/ladies-club-3-oct.jpeg')"></div>
+          <div class="event-photo" role="img" aria-label="Photo from the first Ladies Club meetup" style="--photo:url('events/ladiesclub_oct3.jpeg')"></div>
           <span class="label event-when"><time datetime="2026-10-03">3 October 2026</time> &middot; Migros Golfpark Otelfingen</span>
           <h3>Ladies Club Event: Brunch and Tee Time</h3>
           <p>An amazing meetup with the GS Ladies. 9 Holes on the Altberg course at Migros Golfpark Otelfingen followed by a relaxed brunch together.</p>
           <span class="event-more">View on Instagram &rarr;</span>
         </a>
         <a class="event-card reveal" href="https://www.instagram.com/reel/DcwBUTWMoHt/?mdxt=MWs3dzNndTluZGYweg%3D%3D" target="_blank" rel="noopener">
-          <div class="event-photo" role="img" aria-label="Photo from the first GS event" style="--photo:url('events/1ST event placeholder.jpg')"></div>
+          <div class="event-photo" role="img" aria-label="Photo from the first GS event" style="--photo:url('events/event1_gsflag.jpeg')"></div>
           <span class="label event-when"><time datetime="2026-08-29">29 August 2026</time> &middot; Migros Golfpark Otelfingen</span>
           <h3>Our first Event: Bringing the GS Community to Life</h3>
           <p>Tapping into what made us Golf Switzerland: a passion for the game, meeting new golfers, and most importantly, making golf a little more fun.</p>
@@ -472,11 +561,30 @@
       <h2>Find Inspiration.</h2>
       <a href="https://www.instagram.com/golfswitzerland" target="_blank" rel="noopener">Follow @golfswitzerland &rarr;</a>
     </div>
+    <div class="showcase-wrap">
+      <button class="showcase-arrow prev" type="button" aria-label="Previous posts" hidden>&larr;</button>
+
     <div class="showcase-grid">
-      <div class="card reveal"><div class="card-tag"><span class="plat">Reel</span>Course walkthrough: Golfclub Zürichsee</div></div>
-      <div class="card reveal"><div class="card-tag"><span class="plat">TikTok</span>Things nobody tells you before your first round</div></div>
-      <div class="card reveal"><div class="card-tag"><span class="plat">Reel</span>Ranking Swiss clubhouses by rösti quality</div></div>
-      <div class="card reveal"><div class="card-tag"><span class="plat">Post</span>Meet the community: 6 golfers, 1 tee time</div></div>
+      <a class="card reveal" href="https://www.instagram.com/p/DXcIKEADPlE/?exln=NXhua3B3bzh5MjVm" target="_blank" rel="noopener" style="--photo:url('instagram/golfpark_zurichsee.jpeg')">
+        <div class="card-tag"><span class="plat">Post</span>Why we loved it: Golfclub Zürichsee</div>
+      </a>
+      <a class="card reveal" href="https://www.instagram.com/reel/Dcgrot7MkVC/?dlrf=eDV2cDMzNXZnaWNv" target="_blank" rel="noopener" style="--photo:url('instagram/placeholder')">
+        <div class="card-tag"><span class="plat">Reel</span>Golf @ 1900m 🏔️⛳️</div>
+      </a>
+      <a class="card reveal" href="https://www.instagram.com/reel/DbI_A3gM8wf/?obrf=dXU0ZGx0b3J4NWh2" target="_blank" rel="noopener" style="--photo:url('instagram/placeholder')">
+        <div class="card-tag"><span class="plat">Reel</span>Golf Bündzlis... 🙃</div>
+      </a>
+      <a class="card reveal" href="https://www.instagram.com/reel/DXUTD66jHa6/?xtok=MWhzZWVldjBhcmNmYw%3D%3D" target="_blank" rel="noopener" style="--photo:url('instagram/placeholder')">
+        <div class="card-tag"><span class="plat">Reel</span>Could you ask for a better interruption to your round? 🐱</div>
+      </a>
+      <a class="card reveal" href="https://www.instagram.com/reel/DPwQy3QDKoY/?obrf=MXF5bmJnNmRoOTBqdQ%3D%3D" target="_blank" rel="noopener" style="--photo:url('instagram/placeholder')">
+        <div class="card-tag"><span class="plat">Reel</span>Course Walkthrough: Golf Club Domat/Ems</div>
+      </a>
+      <a class="card reveal" href="https://www.instagram.com/p/XXXXXXXXXXX/" target="_blank" rel="noopener" style="--photo:url('instagram/placeholder.jpeg')">
+        <div class="card-tag"><span class="plat">Post</span>Meet the community: 6 golfers, 1 tee time</div>
+      </a>
+      <button class="showcase-arrow next" type="button" aria-label="More posts">&rarr;</button>
+    </div>
     </div>
   </div>
 </section>
@@ -580,6 +688,23 @@
     form.style.display = 'none';
     success.style.display = 'block';
   });
+
+  // Inspiration strip: arrow buttons
+const sGrid = document.querySelector('.showcase-grid');
+if(sGrid){
+  const prev = document.querySelector('.showcase-arrow.prev');
+  const next = document.querySelector('.showcase-arrow.next');
+  const step = () => sGrid.querySelector('.card').getBoundingClientRect().width + 18;
+  const update = () => {
+    prev.hidden = sGrid.scrollLeft <= 2;
+    next.hidden = sGrid.scrollLeft >= sGrid.scrollWidth - sGrid.clientWidth - 2;
+  };
+  prev.addEventListener('click', () => sGrid.scrollBy({ left: -step(), behavior: 'smooth' }));
+  next.addEventListener('click', () => sGrid.scrollBy({ left:  step(), behavior: 'smooth' }));
+  sGrid.addEventListener('scroll', update, { passive:true });
+  window.addEventListener('resize', update);
+  update();
+}
 </script>
 
 </body>
