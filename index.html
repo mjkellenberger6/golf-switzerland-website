@@ -320,6 +320,34 @@
   }
   a.event-card:hover .event-more{ color:var(--cream-100); }
 
+  /* ===== REGIONS ===== */
+.regions{ background:var(--moss-700); color:var(--cream-100); padding:100px 0; }
+.regions-head{ margin-bottom:56px; }
+.regions-title{
+  font-size:clamp(40px,6vw,72px); font-weight:300; line-height:1.05;
+  color:var(--cream-100); margin-bottom:20px;
+}
+.regions-head p{ color:var(--sage-200); max-width:520px; font-size:16px; line-height:1.65; }
+.region-list{ border-top:1px solid var(--line); }
+.region-row{
+  display:grid; grid-template-columns:1fr auto; gap:14px 32px; align-items:center;
+  padding:26px 0; border-bottom:1px solid var(--line);
+  transition:padding-left .3s ease;
+}
+.region-row:hover{ padding-left:14px; }
+.region-name{ font-family:var(--font-heading); font-size:clamp(22px,3vw,30px); font-weight:400; }
+.region-cantons{
+  margin-top:6px; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:var(--sage-200);
+}
+.region-link{
+  display:inline-flex; align-items:center; gap:8px; white-space:nowrap;
+  font-family:var(--font-body); font-size:13px; letter-spacing:0.06em; font-weight:600;
+  color:var(--cream-100); opacity:0.85; transition:opacity .2s;
+}
+.region-row:hover .region-link{ opacity:1; }
+.region-link i{ font-size:18px; }
+@media(max-width:620px){ .region-row{ grid-template-columns:1fr; } }
+
   /* ===== CONTENT COMMUNITY ===== */
   .inspiration{ padding:70px 0; background:var(--cream-50); }
   .inspiration-head{ display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:56px; flex-wrap:wrap; gap:20px; }
@@ -397,8 +425,8 @@
   }
   .community .contours{ opacity:0.25; }
   .waitlist-inner{ position:relative; z-index:1; max-width:640px; }
-  .waitlist h2{ font-size:clamp(30px,4.5vw,52px); font-weight:300; margin-bottom:20px; }
-  .waitlist p{ color:var(--sage-200); font-size:16px; max-width:480px; line-height:1.65; margin-bottom:40px; }
+  .community h2{ font-size:clamp(30px,4.5vw,52px); font-weight:300; margin-bottom:20px; }
+  .community p{ color:var(--sage-200); font-size:16px; max-width:480px; line-height:1.65; margin-bottom:40px; }
   .waitlist-form{
     display:flex; gap:0; border-bottom:1px solid rgba(255,250,238,0.4); max-width:480px; padding-bottom:14px;
   }
@@ -408,6 +436,7 @@
   }
   .waitlist-form input::placeholder{ color:rgba(255,250,238,0.5); }
   .waitlist-form button{
+    font-family:var(--font-body);
     background:none; border:none; color:var(--gold-500); font-size:13px; letter-spacing:0.08em; font-weight:600; cursor:pointer;
     white-space:nowrap; padding-left:16px;
   }
@@ -563,6 +592,81 @@
   </div>
 </section>
 
+<img class="manifesto-bleed" src="instagram/Buergenstock-GC3.jpg" alt="Golf in Bürgenstock">
+
+<section class="regions" id="regions">
+  <div class="container">
+    <div class="regions-head reveal">
+      <h2 class="regions-title">Find your region</h2>
+      <p>Join the WhatsApp group for where you play the most, and see how easy it can be to meet golfers near you.</p>
+    </div>
+
+    <div class="region-list">
+
+      <a class="region-row reveal" href="https://chat.whatsapp.com/REPLACE-ZURICH" target="_blank" rel="noopener">
+        <div>
+          <div class="region-name">Zürich &amp; Surrounding Areas</div>
+        </div>
+        <span class="region-link"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i>Join the group &rarr;</span>
+      </a>
+
+      <a class="region-row reveal" href="https://chat.whatsapp.com/REPLACE-EAST" target="_blank" rel="noopener">
+        <div>
+          <div class="region-name">Eastern Switzerland</div>
+          <div class="region-cantons">SG, TG, AI/AR, GL, SH</div>
+        </div>
+        <span class="region-link"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i>Join the group &rarr;</span>
+      </a>
+
+      <a class="region-row reveal" href="https://chat.whatsapp.com/REPLACE-GRAUBUENDEN" target="_blank" rel="noopener">
+        <div>
+          <div class="region-name">Graubünden</div>
+        </div>
+        <span class="region-link"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i>Join the group &rarr;</span>
+      </a>
+
+      <a class="region-row reveal" href="https://chat.whatsapp.com/REPLACE-CENTRAL" target="_blank" rel="noopener">
+        <div>
+          <div class="region-name">Central Switzerland</div>
+          <div class="region-cantons">LU, ZG, SZ, OW/NW, UR</div>
+        </div>
+        <span class="region-link"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i>Join the group &rarr;</span>
+      </a>
+
+      <a class="region-row reveal" href="https://chat.whatsapp.com/REPLACE-NORTHWEST" target="_blank" rel="noopener">
+        <div>
+          <div class="region-name">Northwest Switzerland</div>
+          <div class="region-cantons">BS, BL, AG, SO</div>
+        </div>
+        <span class="region-link"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i>Join the group &rarr;</span>
+      </a>
+
+      <a class="region-row reveal" href="https://chat.whatsapp.com/REPLACE-BERN" target="_blank" rel="noopener">
+        <div>
+          <div class="region-name">Bern &amp; Surrounding Areas</div>
+        </div>
+        <span class="region-link"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i>Join the group &rarr;</span>
+      </a>
+
+      <a class="region-row reveal" href="https://chat.whatsapp.com/REPLACE-ROMANDIE" target="_blank" rel="noopener">
+        <div>
+          <div class="region-name">Romandie</div>
+          <div class="region-cantons">VD, GE, VS, NE, FR, JU</div>
+        </div>
+        <span class="region-link"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i>Join the group &rarr;</span>
+      </a>
+
+      <a class="region-row reveal" href="https://chat.whatsapp.com/REPLACE-TICINO" target="_blank" rel="noopener">
+        <div>
+          <div class="region-name">Ticino</div>
+        </div>
+        <span class="region-link"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i>Join the group &rarr;</span>
+      </a>
+
+    </div>
+  </div>
+</section>
+
 <section class="inspiration" id="inspiration">
   <div class="container">
     <div class="inspiration-head reveal">
@@ -597,15 +701,14 @@
 <section class="community" id="community">
   <div class="contours"></div>
   <div class="container waitlist-inner">
-    <div class="label reveal" style="color:var(--gold-500); margin-bottom:18px;">The app</div>
-    <h2 class="reveal">Be first on the tee time.</h2>
-    <p class="reveal">We're building the easiest way to find golfers near you in Switzerland. Leave your email and you'll be first to get in when it opens in your region.</p>
+    <h2 class="reveal">Be the first to know!</h2>
+    <p class="reveal">Winter golf, where to travel, new courses and more &mdash; Get early access to events, special partner offers, and news from the community.</p>
     <form class="waitlist-form reveal" id="waitlistForm">
       <input type="email" id="waitlistEmail" placeholder="your@email.com" required>
-      <button type="submit">Join waitlist &nbsp;&rarr;</button>
+      <button type="submit">Join Us &nbsp;&rarr;</button>
     </form>
     <div class="waitlist-success" id="waitlistSuccess">You're on the list &mdash; see you on the course.</div>
-    <div class="waitlist-note reveal">No spam. Just a note when your region opens.</div>
+    <div class="waitlist-note reveal">No spam. Just a note when we have something special for the community.</div>
   </div>
 </section>
 
