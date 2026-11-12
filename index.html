@@ -442,7 +442,8 @@
   }
   .waitlist-form button:hover{ color:var(--cream-100); }
   .waitlist-note{ margin-top:16px; font-size:12px; color:var(--sage-200); opacity:0.8; }
-  .waitlist-success{ display:none; font-size:14px; color:var(--gold-500); margin-top:16px; }
+  .waitlist-error{ display:none; font-size:14px; color:#FFD6D6; margin-top:16px; }
+  .waitlist-success{ display:none; font-size:14px; color:var(--cream-100); margin-top:16px; }
 
   /* ===== FOOTER ===== */
   footer{ background:var(--moss-900); color:var(--sage-200); padding:60px 0 30px; }
@@ -702,14 +703,21 @@
 <section class="community" id="community">
   <div class="contours"></div>
   <div class="container waitlist-inner">
-    <h2 class="reveal">Be the first to know!</h2>
-    <p class="reveal">Winter golf, where to travel, new courses and more &mdash; Get early access to events, special partner offers, and news from the community.</p>
-    <form class="waitlist-form reveal" id="waitlistForm">
-      <input type="email" id="waitlistEmail" placeholder="your@email.com" required>
-      <button type="submit">Join Us &nbsp;&rarr;</button>
+    <h2 class="reveal">Get the inside track.</h2>
+    <p class="reveal">Be the first to hear about new events, partner perks and community news. Leave your email and we'll keep you posted.</p>
+
+    <form class="waitlist-form reveal" id="waitlistForm" method="POST"
+          action="https://320d40d4.sibforms.com/serve/MUIFANTmcscmYyLndIUTZ88Jj0Jt8o5YEgNlR_vKbmxRdbdomk7wYS7SxmFOI4oBO4XSAhAxoV5RMoIXYNuL2ewlqXQTa5Gc4JWSdu1MMEt0_TsAyKnuffF38bnAZUaFUJCWFXZ8l7quBISSXmNUbFYQGpbRFn-nTQWPmdyy4rWqLC-90KODKYLklquZ_XUbRQgawfwZq4QixcThOQ==">
+      <input type="email" name="EMAIL" id="waitlistEmail" placeholder="your@email.com" aria-label="Your email address" autocomplete="email" required>
+      <!-- spam trap: leave empty, hidden from people -->
+      <input type="text" name="email_address_check" value="" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute; left:-9999px;">
+      <input type="hidden" name="locale" value="en">
+      <button type="submit">I'm in &nbsp;&rarr;</button>
     </form>
-    <div class="waitlist-success" id="waitlistSuccess">You're on the list &mdash; see you on the course.</div>
-    <div class="waitlist-note reveal">No spam. Just a note when we have something special for the community.</div>
+
+    <div class="waitlist-success" id="waitlistSuccess">Thanks! Check your inbox for a confirmation email.</div>
+    <div class="waitlist-error" id="waitlistError">Something went wrong. Please try again in a moment.</div>
+    <div class="waitlist-note reveal">No spam. Just the exciting things going on with Golf Switzerland! &mdash; By subscribing, you agree to receive these updates by email.</div>
   </div>
 </section>
 
@@ -791,14 +799,19 @@
   }
   document.querySelectorAll('.contours').forEach((el, idx) => buildContours(el, idx * 40));
 
-  // Waitlist form (demo — stores nothing external, just confirms)
-  const form = document.getElementById('waitlistForm');
-  const success = document.getElementById('waitlistSuccess');
-  form.addEventListener('submit', function(e){
-    e.preventDefault();
-    form.style.display = 'none';
-    success.style.display = 'block';
-  });
+  // Waitlist form
+const form = document.getElementById('waitlistForm');
+const success = document.getElementById('waitlistSuccess');
+const failure = document.getElementById('waitlistError');
+form.addEventListener('submit', function(e){
+  e.preventDefault();
+  failure.style.display = 'none';
+  const btn = form.querySelector('button');
+  btn.disabled = true;
+  fetch(form.action, { method:'POST', body:new FormData(form), mode:'no-cors' })
+    .then(() => { form.style.display = 'none'; success.style.display = 'block'; })
+    .catch(() => { failure.style.display = 'block'; btn.disabled = false; });
+});
 
   // Inspiration strip: arrow buttons
 const sGrid = document.querySelector('.showcase-grid');
