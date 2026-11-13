@@ -399,20 +399,24 @@
   }
 
 .card::after{
-  content:''; position:absolute; inset:0; z-index:0;
+  content:''; position:absolute; inset:0; z-index:2;
   background-image:
-    linear-gradient(to top, rgba(32,40,26,0.75), transparent 55%),
+    linear-gradient(to top, rgba(20,28,14,0.92) 0%, rgba(20,28,14,0.6) 30%, transparent 62%),
     var(--photo, none);
   background-size:cover;
   background-position:var(--pos, center);
 }
 
+.card-video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:1; }
+
   .card-tag{
-    position:relative; z-index:1;
-    color:var(--cream-100); font-size:13px; line-height:1.4;
+    position:relative; z-index:3;
+      font-size:15px; font-weight:500; line-height:1.4;
+      color:var(--cream-100);
+      text-shadow:0 1px 8px rgba(0,0,0,0.6);
   }
   .card-tag .plat{
-    display:block; font-size:10px; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold-500); margin-bottom:6px;
+    display:block; font-size:11px; font-weight:600; color:#E8C48A; letter-spacing:0.18em; text-transform:uppercase; margin-bottom:6px;
   }
   .card:nth-child(2){ background:linear-gradient(160deg, #6B7F49, var(--moss-900)); }
   .card:nth-child(3){ background:linear-gradient(160deg, var(--moss-900), #1D2712); }
@@ -682,8 +686,11 @@
       <a class="card reveal" href="https://www.instagram.com/p/DXcIKEADPlE/?exln=NXhua3B3bzh5MjVm" target="_blank" rel="noopener" style="--photo:url('instagram/golfpark_zurichsee.jpeg')">
         <div class="card-tag"><span class="plat">Post</span>Why we loved it: Golfclub Zürichsee</div>
       </a>
-      <a class="card reveal" href="https://www.instagram.com/reel/Dcgrot7MkVC/?dlrf=eDV2cDMzNXZnaWNv" target="_blank" rel="noopener" style="--photo:url('instagram/placeholder')">
-        <div class="card-tag"><span class="plat">Reel</span>Golf @ 1900m 🏔️⛳️</div>
+      <a class="card reveal" href="https://www.instagram.com/reel/Dcgrot7MkVC/?dlrf=eDV2cDMzNXZnaWNv" target="_blank" rel="noopener">
+      <video class="card-video" muted loop playsinline preload="metadata">
+       <source src="instagram/golf_at_1900m.mp4#t=0.1" type="video/mp4">
+      </video>
+      <div class="card-tag"><span class="plat">Reel</span>Golf @ 1900m 🏔️⛳</div>
       </a>
       <a class="card reveal" href="https://www.instagram.com/reel/DbI_A3gM8wf/?obrf=dXU0ZGx0b3J4NWh2" target="_blank" rel="noopener" style="--photo:url('instagram/placeholder')">
         <div class="card-tag"><span class="plat">Reel</span>Golf Bündzlis... 🙃</div>
@@ -828,6 +835,22 @@ if(sGrid){
   sGrid.addEventListener('scroll', update, { passive:true });
   window.addEventListener('resize', update);
   update();
+}
+
+// Inspiration cards: play the preview on hover (desktop) or when in view (phones)
+document.querySelectorAll('.card').forEach(card => {
+  const v = card.querySelector('.card-video');
+  if(!v) return;
+  card.addEventListener('mouseenter', () => v.play().catch(() => {}));
+  card.addEventListener('mouseleave', () => { v.pause(); v.currentTime = 0; });
+});
+if(window.matchMedia('(hover:none)').matches){
+  const vio = new IntersectionObserver(entries => entries.forEach(e => {
+    const v = e.target.querySelector('.card-video');
+    if(!v) return;
+    e.isIntersecting ? v.play().catch(() => {}) : v.pause();
+  }), { threshold: 0.6 });
+  document.querySelectorAll('.card').forEach(c => vio.observe(c));
 }
 </script>
 
