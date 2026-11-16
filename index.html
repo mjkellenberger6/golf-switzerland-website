@@ -464,6 +464,15 @@
   .footer-col a i{ font-size:16px; width:18px; text-align:center; }
   .footer-col a:hover{ color:var(--cream-100); }
   .footer-bottom{ display:flex; justify-content:space-between; padding-top:26px; font-size:12px; color:#6B7A5A; flex-wrap:wrap; gap:10px; }
+  .footer-partners{ padding:40px 0; border-bottom:1px solid var(--line); }
+  .footer-partners .label{ color:var(--gold-500); display:block; margin-bottom:24px; }
+  .partner-logos{ display:flex; flex-wrap:wrap; align-items:center; gap:28px 48px; }
+  .partner-logos a{ display:block; opacity:0.75; transition:opacity .2s; }
+  .partner-logos a:hover{ opacity:1; }
+  .partner-logos img{
+    height:36px; width:auto; max-width:160px; object-fit:contain;
+    filter:brightness(0) invert(1);} /* turns every logo cream-white so they match */
+  .partner-logos img.keep-color{ filter:none; }   
 
   .reveal{ opacity:0; transform:translateY(24px); transition:opacity .8s ease, transform .8s ease; }
   .reveal.visible{ opacity:1; transform:translateY(0); }
@@ -785,6 +794,17 @@
           <a href="#regions">Regions</a>
           <a href="#inspiration">Find Inspiration</a>
         </div>
+      </div>
+    </div>
+        <div class="footer-partners">
+      <span class="label">Our partners</span>
+      <div class="partner-logos">
+        <a href="https://www.golfswitzerland.ch" target="_blank" rel="noopener" aria-label="Golf Switzerland">
+          <img class="keep-color" src="events/gs-logo-cream-circle.svg" alt="Golf Switzerland">
+        </a>
+        <!-- <a href="https://vbeauty.ch" target="_blank" rel="noopener" aria-label="V Beauty">
+          <img src="partners/vbeauty.png" alt="V Beauty">
+        </a> -->
       </div>
     </div>
     <div class="footer-bottom">
