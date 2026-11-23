@@ -190,6 +190,7 @@
   .manifesto-grid{
     display:grid; grid-template-columns:220px 1fr; gap:60px;
   }
+  
   @media(max-width:760px){ .manifesto-grid{ grid-template-columns:1fr; gap:24px; } }
   .manifesto .label{ color:var(--gold-600); }
   .manifesto p.big{
@@ -233,6 +234,34 @@
 .manifesto-bleed{
   display:block; width:100%;
   height:clamp(240px,42vw,520px); object-fit:cover;
+}
+.manifesto-grid.has-photo{ grid-template-columns:200px 1fr 340px; gap:48px; align-items:start; }
+.manifesto-portrait{ width:100%; aspect-ratio:4/5; object-fit:cover; object-position:center 40%; border-radius:3px; }
+@media(max-width:1000px){
+  .manifesto-grid.has-photo{ grid-template-columns:1fr; }
+  .manifesto-portrait{ max-width:380px; }
+}
+
+/* ===== ABOUT: split layout ===== */
+.manifesto{ padding:0; }
+.about-split{ display:grid; grid-template-columns:1fr 1fr; }
+.about-text{
+  align-self:center;
+  padding:140px 64px 120px max(32px, calc((100vw - 1180px) / 2 + 32px));
+}
+.about-text .manifesto-title{ margin-bottom:56px; }
+.about-text .label{ display:block; margin-bottom:20px; }
+.about-text p.big{ font-size:clamp(24px, 2.6vw, 36px); }
+.about-photo{
+  min-height:560px;
+  background-image:var(--photo, none);
+  background-size:cover;
+  background-position:center 35%;
+}
+@media(max-width:900px){
+  .about-split{ grid-template-columns:1fr; }
+  .about-text{ padding:110px 20px 56px; }
+  .about-photo{ aspect-ratio:4/5; max-height:560px; min-height:0; }
 }
 
 /* ===== EVENTS ===== */
@@ -427,13 +456,30 @@
     background:var(--moss-700); color:var(--cream-100);
     padding:130px 0; position:relative; overflow:hidden;
   }
-  .community .contours{ opacity:0.25; }
+  .community .contours{ display: none; opacity:0.25; }
   .waitlist-inner{ position:relative; z-index:1; max-width:640px; }
   .community h2{ font-size:clamp(30px,4.5vw,52px); font-weight:300; margin-bottom:20px; }
   .community p{ color:var(--sage-200); font-size:16px; max-width:480px; line-height:1.65; margin-bottom:40px; }
   .waitlist-form{
     display:flex; gap:0; border-bottom:1px solid rgba(255,250,238,0.4); max-width:480px; padding-bottom:14px;
   }
+  .community{
+  position:relative;
+  overflow:hidden;
+  isolation:isolate;   /* keeps the photo layers inside this section */
+}
+.community::before{    /* the photo */
+  content:"";
+  position:absolute; inset:0;
+  z-index:-2;
+  background:var(--photo) center/cover no-repeat;
+}
+.community::after{     /* the green tint */
+  content:"";
+  position:absolute; inset:0;
+  z-index:-1;
+  background:linear-gradient(rgba(74,108,29,.80), rgba(44,58,27,.88));
+}
   .waitlist-form input{
     flex:1; background:none; border:none; outline:none;
     font-family:var(--font-body); font-size:16px; color:var(--cream-100);
@@ -522,21 +568,21 @@
 </section>
 
 <section class="manifesto" id="manifesto">
-  <div class="container">
-    <h2 class="manifesto-title reveal">About Golf Switzerland.</h2>
-  </div>
-  <div class="container manifesto-grid">
-    <div class="reveal">
-      <div class="label">The problem</div>
+  <div class="about-split">
+
+    <div class="about-text">
+      <h2 class="manifesto-title reveal">About Golf Switzerland.</h2>
+      <div class="label reveal">The problem</div>
+      <p class="big reveal">Switzerland has some of the most beautiful golf in Europe &mdash; but finding someone to play with is harder than it should be. Whether you&apos;re brand new or chasing a lower handicap, it&apos;s the right people who really make the round.</p>
+      <p class="manifesto-note reveal">Golf Switzerland started as a content project &mdash; course reviews, golf swings, and beginner struggles. Then it grew into an actual community: a place to find fun people you can enjoy golfing with.</p>
     </div>
-    <div class="reveal">
-      <p class="big">Switzerland has some of the most beautiful golf in Europe &mdash; but finding someone to play with is harder than it should be. Whether you&apos;re brand new or chasing a lower handicap, it's the right people who really make the round.</p>
-      <p class="manifesto-note">Golf Switzerland started as a content project &mdash; course reviews, golf swings, and beginner struggles. Then it grew into an actual community: a place to find fun people you can enjoy golfing with.</p>
-    </div>
+
+    <div class="about-photo reveal" role="img"
+         aria-label="A golfer mid-swing on the tee, with the Swiss Alps behind"
+         style="--photo:url('backgrounds/swingportrait.jpeg')"></div>
+
   </div>
 </section>
-
-<img class="manifesto-bleed" src="events/arosagolf_landscape.jpeg" alt="Golf course in the arosa mountains">
 
 <section class="events" id="events">
   <div class="container">
@@ -607,7 +653,7 @@
   </div>
 </section>
 
-<img class="manifesto-bleed" src="instagram/Buergenstock-GC3.jpg" alt="Golf in Bürgenstock">
+<img class="manifesto-bleed" src="backgrounds/arosagolf_landscape.jpeg" alt="Golf course in the arosa mountains">
 
 <section class="regions" id="regions">
   <div class="container">
@@ -682,6 +728,8 @@
   </div>
 </section>
 
+<img class="manifesto-bleed" src="backgrounds/zurichsee_widepic.jpeg" alt="Golf in Zurichsee">
+
 <section class="inspiration" id="inspiration">
   <div class="container">
     <div class="inspiration-head reveal">
@@ -744,7 +792,7 @@
   </div>
 </section>
 
-<section class="community" id="community">
+<section class="community" id="community" style="--photo:url('backgrounds/flag_arosa.jpeg')">
   <div class="contours"></div>
   <div class="container waitlist-inner">
     <h2 class="reveal">Get the inside track.</h2>
@@ -799,8 +847,8 @@
         <div class="footer-partners">
       <span class="label">Our partners</span>
       <div class="partner-logos">
-        <a href="https://www.golfswitzerland.ch" target="_blank" rel="noopener" aria-label="Golf Switzerland">
-          <img class="keep-color" src="events/gs-logo-cream-circle.svg" alt="Golf Switzerland">
+        <a href="https://secondroundgolf.ch/" target="_blank" rel="noopener" aria-label="Second Round Golf">
+          <img class="keep-color" src="logos/second-round-golf-wordmark.svg" alt="Second Round Golf">
         </a>
         <!-- <a href="https://vbeauty.ch" target="_blank" rel="noopener" aria-label="V Beauty">
           <img src="partners/vbeauty.png" alt="V Beauty">
