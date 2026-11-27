@@ -190,6 +190,7 @@
   .manifesto-grid{
     display:grid; grid-template-columns:220px 1fr; gap:60px;
   }
+  
   @media(max-width:760px){ .manifesto-grid{ grid-template-columns:1fr; gap:24px; } }
   .manifesto .label{ color:var(--gold-600); }
   .manifesto p.big{
@@ -233,6 +234,34 @@
 .manifesto-bleed{
   display:block; width:100%;
   height:clamp(240px,42vw,520px); object-fit:cover;
+}
+.manifesto-grid.has-photo{ grid-template-columns:200px 1fr 340px; gap:48px; align-items:start; }
+.manifesto-portrait{ width:100%; aspect-ratio:4/5; object-fit:cover; object-position:center 40%; border-radius:3px; }
+@media(max-width:1000px){
+  .manifesto-grid.has-photo{ grid-template-columns:1fr; }
+  .manifesto-portrait{ max-width:380px; }
+}
+
+/* ===== ABOUT: split layout ===== */
+.manifesto{ padding:0; }
+.about-split{ display:grid; grid-template-columns:1fr 1fr; }
+.about-text{
+  align-self:center;
+  padding:140px 64px 120px max(32px, calc((100vw - 1180px) / 2 + 32px));
+}
+.about-text .manifesto-title{ margin-bottom:56px; }
+.about-text .label{ display:block; margin-bottom:20px; }
+.about-text p.big{ font-size:clamp(24px, 2.6vw, 36px); }
+.about-photo{
+  min-height:560px;
+  background-image:var(--photo, none);
+  background-size:cover;
+  background-position:center 35%;
+}
+@media(max-width:900px){
+  .about-split{ grid-template-columns:1fr; }
+  .about-text{ padding:110px 20px 56px; }
+  .about-photo{ aspect-ratio:4/5; max-height:560px; min-height:0; }
 }
 
 /* ===== EVENTS ===== */
@@ -359,6 +388,8 @@
   .showcase-grid{
   display:flex; gap:18px;
   overflow-x:auto;
+  overflow-y:hidden;
+  overscroll-behavior-x:contain;
   scroll-snap-type:x mandatory;
   -webkit-overflow-scrolling:touch;
   padding-bottom:16px;
@@ -399,20 +430,24 @@
   }
 
 .card::after{
-  content:''; position:absolute; inset:0; z-index:0;
+  content:''; position:absolute; inset:0; z-index:2;
   background-image:
-    linear-gradient(to top, rgba(32,40,26,0.75), transparent 55%),
+    linear-gradient(to top, rgba(20,28,14,0.92) 0%, rgba(20,28,14,0.6) 30%, transparent 62%),
     var(--photo, none);
   background-size:cover;
   background-position:var(--pos, center);
 }
 
+.card-video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:1; }
+
   .card-tag{
-    position:relative; z-index:1;
-    color:var(--cream-100); font-size:13px; line-height:1.4;
+    position:relative; z-index:3;
+      font-size:15px; font-weight:500; line-height:1.4;
+      color:var(--cream-100);
+      text-shadow:0 1px 8px rgba(0,0,0,0.6);
   }
   .card-tag .plat{
-    display:block; font-size:10px; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold-500); margin-bottom:6px;
+    display:block; font-size:11px; font-weight:600; color:#E8C48A; letter-spacing:0.18em; text-transform:uppercase; margin-bottom:6px;
   }
   .card:nth-child(2){ background:linear-gradient(160deg, #6B7F49, var(--moss-900)); }
   .card:nth-child(3){ background:linear-gradient(160deg, var(--moss-900), #1D2712); }
@@ -423,13 +458,30 @@
     background:var(--moss-700); color:var(--cream-100);
     padding:130px 0; position:relative; overflow:hidden;
   }
-  .community .contours{ opacity:0.25; }
+  .community .contours{ display: none; opacity:0.25; }
   .waitlist-inner{ position:relative; z-index:1; max-width:640px; }
   .community h2{ font-size:clamp(30px,4.5vw,52px); font-weight:300; margin-bottom:20px; }
   .community p{ color:var(--sage-200); font-size:16px; max-width:480px; line-height:1.65; margin-bottom:40px; }
   .waitlist-form{
     display:flex; gap:0; border-bottom:1px solid rgba(255,250,238,0.4); max-width:480px; padding-bottom:14px;
   }
+  .community{
+  position:relative;
+  overflow:hidden;
+  isolation:isolate;   /* keeps the photo layers inside this section */
+}
+.community::before{    /* the photo */
+  content:"";
+  position:absolute; inset:0;
+  z-index:-2;
+  background:var(--photo) center/cover no-repeat;
+}
+.community::after{     /* the green tint */
+  content:"";
+  position:absolute; inset:0;
+  z-index:-1;
+  background:linear-gradient(rgba(74,108,29,.80), rgba(44,58,27,.88));
+}
   .waitlist-form input{
     flex:1; background:none; border:none; outline:none;
     font-family:var(--font-body); font-size:16px; color:var(--cream-100);
@@ -460,6 +512,15 @@
   .footer-col a i{ font-size:16px; width:18px; text-align:center; }
   .footer-col a:hover{ color:var(--cream-100); }
   .footer-bottom{ display:flex; justify-content:space-between; padding-top:26px; font-size:12px; color:#6B7A5A; flex-wrap:wrap; gap:10px; }
+  .footer-partners{ padding:40px 0; border-bottom:1px solid var(--line); }
+  .footer-partners .label{ color:var(--gold-500); display:block; margin-bottom:24px; }
+  .partner-logos{ display:flex; flex-wrap:wrap; align-items:center; gap:28px 48px; }
+  .partner-logos a{ display:block; opacity:0.75; transition:opacity .2s; }
+  .partner-logos a:hover{ opacity:1; }
+  .partner-logos img{
+    height:36px; width:auto; max-width:160px; object-fit:contain;
+    filter:brightness(0) invert(1);} /* turns every logo cream-white so they match */
+  .partner-logos img.keep-color{ filter:none; }   
 
   .reveal{ opacity:0; transform:translateY(24px); transition:opacity .8s ease, transform .8s ease; }
   .reveal.visible{ opacity:1; transform:translateY(0); }
@@ -509,21 +570,21 @@
 </section>
 
 <section class="manifesto" id="manifesto">
-  <div class="container">
-    <h2 class="manifesto-title reveal">About Golf Switzerland</h2>
-  </div>
-  <div class="container manifesto-grid">
-    <div class="reveal">
-      <div class="label">The problem</div>
+  <div class="about-split">
+
+    <div class="about-text">
+      <h2 class="manifesto-title reveal">About Golf Switzerland.</h2>
+      <div class="label reveal">The problem</div>
+      <p class="big reveal">Switzerland has some of the most beautiful golf in Europe &mdash; but finding someone to play with is harder than it should be. Whether you&apos;re brand new or chasing a lower handicap, it&apos;s the right people who really make the round.</p>
+      <p class="manifesto-note reveal">Golf Switzerland started as a content project &mdash; course reviews, golf swings, and beginner struggles. Then it grew into an actual community: a place to find fun people you can enjoy golfing with.</p>
     </div>
-    <div class="reveal">
-      <p class="big">Switzerland has some of the most beautiful golf in Europe &mdash; but finding someone to play with is harder than it should be. Whether you&apos;re brand new or chasing a lower handicap, it's the right people who really make the round.</p>
-      <p class="manifesto-note">Golf Switzerland started as a content project &mdash; course reviews, golf swings, and beginner struggles. Then it grew into an actual community: a place to find fun people you can enjoy golfing with.</p>
-    </div>
+
+    <div class="about-photo reveal" role="img"
+         aria-label="A golfer mid-swing on the tee, with the Swiss Alps behind"
+         style="--photo:url('backgrounds/swingportrait.jpeg')"></div>
+
   </div>
 </section>
-
-<img class="manifesto-bleed" src="events/arosagolf_landscape.jpeg" alt="Golf course in the arosa mountains">
 
 <section class="events" id="events">
   <div class="container">
@@ -594,12 +655,12 @@
   </div>
 </section>
 
-<img class="manifesto-bleed" src="instagram/Buergenstock-GC3.jpg" alt="Golf in Bürgenstock">
+<img class="manifesto-bleed" src="backgrounds/arosagolf_landscape.jpeg" alt="Golf course in the arosa mountains">
 
 <section class="regions" id="regions">
   <div class="container">
     <div class="regions-head reveal">
-      <h2 class="regions-title">Find your region</h2>
+      <h2 class="regions-title">Find your region.</h2>
       <p>Join the WhatsApp group for where you play the most, and see how easy it can be to meet golfers near you.</p>
     </div>
 
@@ -669,6 +730,8 @@
   </div>
 </section>
 
+<img class="manifesto-bleed" src="backgrounds/zurichsee_widepic.jpeg" alt="Golf in Zurichsee">
+
 <section class="inspiration" id="inspiration">
   <div class="container">
     <div class="inspiration-head reveal">
@@ -679,28 +742,59 @@
       <button class="showcase-arrow prev" type="button" aria-label="Previous posts" hidden>&larr;</button>
 
     <div class="showcase-grid">
-      <a class="card reveal" href="https://www.instagram.com/p/DXcIKEADPlE/?exln=NXhua3B3bzh5MjVm" target="_blank" rel="noopener" style="--photo:url('instagram/golfpark_zurichsee.jpeg')">
+      <a class="card reveal" href="https://www.instagram.com/reel/Dcgrot7MkVC/?dlrf=eDV2cDMzNXZnaWNv" target="_blank" rel="noopener">
+      <video class="card-video" muted loop playsinline preload="metadata">
+       <source src="instagram/golf_at_1900m_short.mp4" type="video/mp4">
+      </video>
+      <div class="card-tag"><span class="plat">Reel</span>Golf @ 1900m 🏔️⛳</div>
+      </a>
+      <a class="card reveal" href="https://www.instagram.com/p/DXcIKEADPlE/?exln=NXhua3B3bzh5MjVm" target="_blank" rel="noopener" style="--photo:url('instagram/zurichsee_pic.jpg')">
         <div class="card-tag"><span class="plat">Post</span>Why we loved it: Golfclub Zürichsee</div>
       </a>
-      <a class="card reveal" href="https://www.instagram.com/reel/Dcgrot7MkVC/?dlrf=eDV2cDMzNXZnaWNv" target="_blank" rel="noopener" style="--photo:url('instagram/placeholder')">
-        <div class="card-tag"><span class="plat">Reel</span>Golf @ 1900m 🏔️⛳️</div>
+      <a class="card reveal" href="https://www.instagram.com/reel/DbI_A3gM8wf/?obrf=dXU0ZGx0b3J4NWh2" target="_blank" rel="noopener">
+      <video class="card-video" data-start="0.5" muted loop playsinline preload="metadata">
+       <source src="instagram/golf_bundzlis_short.MP4#t=0.5" type="video/mp4">
+      </video>
+      <div class="card-tag"><span class="plat">Reel</span>Golf Bündzlis... 🙃</div>
       </a>
-      <a class="card reveal" href="https://www.instagram.com/reel/DbI_A3gM8wf/?obrf=dXU0ZGx0b3J4NWh2" target="_blank" rel="noopener" style="--photo:url('instagram/placeholder')">
-        <div class="card-tag"><span class="plat">Reel</span>Golf Bündzlis... 🙃</div>
+      <a class="card reveal" href="https://www.instagram.com/reel/DXUTD66jHa6/?xtok=MWhzZWVldjBhcmNmYw%3D%3D" target="_blank" rel="noopener">
+      <video class="card-video" muted loop playsinline preload="metadata">
+       <source src="instagram/cat_on_course_short.MP4" type="video/mp4">
+      </video>
+      <div class="card-tag"><span class="plat">Reel</span>Could you ask for a better interruption to your round? 🐱</div>
       </a>
-      <a class="card reveal" href="https://www.instagram.com/reel/DXUTD66jHa6/?xtok=MWhzZWVldjBhcmNmYw%3D%3D" target="_blank" rel="noopener" style="--photo:url('instagram/placeholder')">
-        <div class="card-tag"><span class="plat">Reel</span>Could you ask for a better interruption to your round? 🐱</div>
+      <a class="card reveal" href="https://www.instagram.com/p/DWeg9BdDEnF/" target="_blank" rel="noopener">
+      <video class="card-video" muted loop playsinline preload="metadata">
+       <source src="instagram/play_a_hole_with_us_short.MP4" type="video/mp4">
+      </video>
+      <div class="card-tag"><span class="plat">Reel</span>Play a hole with us 🏌️‍♂️</div>
       </a>
-      <a class="card reveal" href="https://www.instagram.com/reel/DPwQy3QDKoY/?obrf=MXF5bmJnNmRoOTBqdQ%3D%3D" target="_blank" rel="noopener" style="--photo:url('instagram/placeholder')">
-        <div class="card-tag"><span class="plat">Reel</span>Course Walkthrough: Golf Club Domat/Ems</div>
+      <a class="card reveal" href="https://www.instagram.com/p/DX7B1TeM2zc/" target="_blank" rel="noopener">
+      <video class="card-video" muted loop playsinline preload="metadata">
+       <source src="instagram/hybrid_shot_short.MP4" type="video/mp4">
+      </video>
+      <div class="card-tag"><span class="plat">Reel</span>So Pure 😮‍💨</div>
       </a>
+      <a class="card reveal" href="https://www.instagram.com/p/DdWjy7LMS2J/" target="_blank" rel="noopener">
+      <video class="card-video" data-start="4.3" muted loop playsinline preload="metadata">
+       <source src="instagram/golfsnacks_short.MP4#t=4.3" type="video/mp4">
+      </video>
+      <div class="card-tag"><span class="plat">Reel</span>Golf Course Snacks? 🍫🌭</div>
+      </a>
+      <a class="card reveal" href="https://www.instagram.com/p/DP_12FMDByw/" target="_blank" rel="noopener">
+      <video class="card-video" muted loop playsinline preload="metadata">
+       <source src="instagram/badragaz_review_short.MP4" type="video/mp4">
+      </video>
+      <div class="card-tag"><span class="plat">Reel</span>Course Walkthrough: Golf Club Bad Ragaz</div>
+      </a>
+      
       <button class="showcase-arrow next" type="button" aria-label="More posts">&rarr;</button>
     </div>
     </div>
   </div>
 </section>
 
-<section class="community" id="community">
+<section class="community" id="community" style="--photo:url('backgrounds/flag_arosa.jpeg')">
   <div class="contours"></div>
   <div class="container waitlist-inner">
     <h2 class="reveal">Get the inside track.</h2>
@@ -750,6 +844,17 @@
           <a href="#regions">Regions</a>
           <a href="#inspiration">Find Inspiration</a>
         </div>
+      </div>
+    </div>
+        <div class="footer-partners">
+      <span class="label">Our partners</span>
+      <div class="partner-logos">
+        <a href="https://secondroundgolf.ch/" target="_blank" rel="noopener" aria-label="Second Round Golf">
+          <img class="keep-color" src="logos/second-round-golf-wordmark.svg" alt="Second Round Golf">
+        </a>
+        <!-- <a href="https://vbeauty.ch" target="_blank" rel="noopener" aria-label="V Beauty">
+          <img src="partners/vbeauty.png" alt="V Beauty">
+        </a> -->
       </div>
     </div>
     <div class="footer-bottom">
@@ -828,6 +933,22 @@ if(sGrid){
   sGrid.addEventListener('scroll', update, { passive:true });
   window.addEventListener('resize', update);
   update();
+}
+
+// Inspiration cards: play the preview on hover (desktop) or when in view (phones)
+document.querySelectorAll('.card').forEach(card => {
+  const v = card.querySelector('.card-video');
+  if(!v) return;
+  card.addEventListener('mouseenter', () => v.play().catch(() => {}));
+  card.addEventListener('mouseleave', () => { v.pause(); v.currentTime = parseFloat(v.dataset.start) || 0; });
+});
+if(window.matchMedia('(hover:none)').matches){
+  const vio = new IntersectionObserver(entries => entries.forEach(e => {
+    const v = e.target.querySelector('.card-video');
+    if(!v) return;
+    e.isIntersecting ? v.play().catch(() => {}) : v.pause();
+  }), { threshold: 0.6 });
+  document.querySelectorAll('.card').forEach(c => vio.observe(c));
 }
 </script>
 
